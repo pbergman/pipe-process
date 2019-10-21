@@ -1,6 +1,6 @@
 # PROCESS PIPE
 
-An abstraction layer around the [exec.Cmd](https://golang.org/pkg/os/exec/#Cmd) for easily creating linked commands in an [Pipeline](https://en.wikipedia.org/wiki/Pipeline_(Unix) format.
+An abstraction layer around the [exec.Cmd](https://golang.org/pkg/os/exec/#Cmd) for easily creating linked commands in an [Pipeline](https://en.wikipedia.org/wiki/Pipeline_(Unix)) format.
 
 So for example:
 
@@ -44,21 +44,21 @@ go get -u github.com/pbergman/pipe-process
 ### example
 
 ```
-    cmd, err := pipe.NewProcess(`echo 'SOME SECRET PASSPHRASE' | gpg --batch --decrypt --yes --passphrase-fd 0 dump.sql.gpg | bzip2 -d | mysql example_database`)
+  cmd, err := pipe.NewProcess(`echo 'SOME SECRET PASSPHRASE' | gpg --batch --decrypt --yes --passphrase-fd 0 dump.sql.gpg | bzip2 -d | mysql example_database`)
 
-    if err != nil {
-        panic(err)
-    }
+  if err != nil {
+    panic(err)
+  }
 
-    // print command output to default STDOUT
-    (*cmd)[cmd.Len()-1].Stdout = os.Stdout
+  // print command output to default STDOUT
+  (*cmd)[cmd.Len()-1].Stdout = os.Stdout
 
-    // map all stderr to default STDERR
-    for _, curr := range *cmd {        
-        curr.Stderr = os.Stderr		
-    }
-    
-    if err := cmd.Run(); err != nil {
-        panic(err) 
-    }
+  // map all stderr to default STDERR
+  for _, curr := range *cmd {        
+    curr.Stderr = os.Stderr		
+  }
+
+  if err := cmd.Run(); err != nil {
+    panic(err) 
+  }
 ```
